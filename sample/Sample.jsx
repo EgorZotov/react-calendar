@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import Calendar from 'react-calendar';
-
+import Calendar, {MonthView} from 'react-calendar';
 import './Sample.less';
 
 export default class Sample extends Component {
   state = {
     value: new Date(),
-  }
+  };
+
+  renderDay = ({ date }) => {
+    const weekday = date.toLocaleDateString("ru-RU", {weekday: "short"}).toUpperCase();
+    const day = date.toLocaleDateString("ru-RU", {day: "numeric"}).toUpperCase();
+    return (
+      <div style={{display: "flex", flexDirection: "column", color: "black", marginBottom: 10}}>
+        {weekday}
+      </div>
+    );
+  };
 
   onChange = value => this.setState({ value })
 
@@ -23,8 +32,9 @@ export default class Sample extends Component {
           <main className="Sample__container__content">
             <Calendar
               onChange={this.onChange}
-              showWeekNumbers
+              // showWeekNumbers
               value={value}
+              tileContent = {this.renderDay}
             />
           </main>
         </div>
